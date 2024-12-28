@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("btn").addEventListener("click", sendReq);
+      });
+      sendReq = async () => {
+        let payload = "";
+        for (let i = 0; i < 10_000; i++) {
+          payload += `Payload Message: ${i}\n`;
+        }
+        const response = await fetch("/read", {
+          method: "POST",
+          body: payload,
+        });
+        document.getElementById("msg").textContent = response.statusText;
+        document.getElementById("body").textContent = await response.text();
+      };
+    </script>
+  </head>
+  <body>
+    <button id="btn">Send Request</button>
+    <div id="msg"></div>
+    <div id="body"></div>
+  </body>
+</html>
